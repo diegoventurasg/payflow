@@ -115,7 +115,6 @@ class BarcodeScannerController {
             final inputImageCamera = InputImage.fromBytes(
                 bytes: bytes, inputImageData: inputImageData);
             scannerBarCode(inputImageCamera);
-            // await Future.delayed(Duration(seconds: 1));
           } catch (e) {
             print(e);
           }
