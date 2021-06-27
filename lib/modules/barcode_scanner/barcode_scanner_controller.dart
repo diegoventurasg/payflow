@@ -38,6 +38,7 @@ class BarcodeScannerController {
   Future<void> scannerBarCode(InputImage inputImage) async {
     try {
       final barcodes = await barcodeScanner.processImage(inputImage);
+      print("TOTALB: " + barcodes.length.toString());
 
       var barcode;
       for (Barcode item in barcodes) {
@@ -75,7 +76,6 @@ class BarcodeScannerController {
     delay = Timer(Duration(seconds: 20), () {
       if (status.hasBarcode == false)
         status = BarcodeScannerStatus.error("Timeout de leitura de boleto");
-      dispose();
     });
   }
 
@@ -115,6 +115,7 @@ class BarcodeScannerController {
             final inputImageCamera = InputImage.fromBytes(
                 bytes: bytes, inputImageData: inputImageData);
             scannerBarCode(inputImageCamera);
+            // await Future.delayed(Duration(seconds: 1));
           } catch (e) {
             print(e);
           }
