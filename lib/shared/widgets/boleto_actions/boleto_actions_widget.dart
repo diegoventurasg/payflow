@@ -52,7 +52,7 @@ class BoletoActionsWidget extends StatelessWidget {
                     style: AppTextStyles.titleHeading,
                   ),
                   TextSpan(
-                    text: data.value.toString(),
+                    text: data.value!.toStringAsFixed(2).replaceFirst(".", ","),
                     style: AppTextStyles.titleBoldHeading,
                   ),
                   TextSpan(
