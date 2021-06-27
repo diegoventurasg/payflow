@@ -28,9 +28,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   }
 
   void openInsertBoleto() async {
-    //da dispose para fechar a camera
-    //antes de abrir a tela de cadastro de boleto
-    controller.dispose();
+    controller.cancel();
     final result = await Navigator.pushNamed(context, "/insert_boleto",
         arguments: controller.status.barcode);
     //se result for diferente de null
@@ -41,7 +39,6 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
 
   @override
   void dispose() {
-    controller.statusNotifier.dispose();
     controller.dispose();
     super.dispose();
   }
@@ -101,7 +98,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                 },
                 secondaryLabel: "Adicionar da galeria",
                 secondaryOnPressed: () async {
-                  controller.dispose();
+                  controller.cancel();
                   final imagePicked = await controller.scanWithImagePicker();
                   if (!imagePicked) controller.getAvailableCameras();
                 },

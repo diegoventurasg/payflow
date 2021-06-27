@@ -122,8 +122,17 @@ class BarcodeScannerController {
       });
   }
 
+  void cancel() {
+    delay!.cancel();
+    barcodeScanner.close();
+    if (status.showCamera) {
+      cameraController!.dispose();
+    }
+  }
+
   void dispose() {
     delay!.cancel();
+    statusNotifier.dispose();
     barcodeScanner.close();
     if (status.showCamera) {
       cameraController!.dispose();
