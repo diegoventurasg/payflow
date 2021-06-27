@@ -15,7 +15,7 @@ class MeusBoletosPage extends StatefulWidget {
 }
 
 class _MeusBoletosPageState extends State<MeusBoletosPage> {
-  final controller = BoletoListController();
+  final controller = BoletoListController(paid: false);
 
   @override
   Widget build(BuildContext context) {

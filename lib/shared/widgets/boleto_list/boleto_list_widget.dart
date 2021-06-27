@@ -21,7 +21,12 @@ class _BoletoListWidgetState extends State<BoletoListWidget> {
     return ValueListenableBuilder<List<BoletoModel>>(
       valueListenable: widget.controller.boletosNotifier,
       builder: (_, boletos, __) => Column(
-        children: boletos.map((e) => BoletoTileWidget(data: e)).toList(),
+        children: boletos
+            .map((e) => BoletoTileWidget(
+                  data: e,
+                  controller: widget.controller,
+                ))
+            .toList(),
       ),
     );
   }
