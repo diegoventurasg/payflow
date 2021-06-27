@@ -35,7 +35,7 @@ class AuthController {
     }
   }
 
-  Future<void> loggout(BuildContext context) async {
+  Future<void> logout(BuildContext context) async {
     final instance = await SharedPreferences.getInstance();
     await instance.remove("user");
     Navigator.pushReplacementNamed(context, "/login");

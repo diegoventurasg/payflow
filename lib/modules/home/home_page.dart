@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              authController.loggout(context);
+                              authController.logout(context);
                             },
                             child: Text("Sair"),
                           ),
