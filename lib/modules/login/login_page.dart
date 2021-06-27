@@ -30,17 +30,77 @@ class _LoginPageState extends State<LoginPage> {
               color: AppColors.primary,
             ),
             Positioned(
-              top: 40,
+              top: size.height * 0.0455,
               left: 0,
               right: 0,
               child: Image.asset(
                 AppImages.person,
-                width: 208,
-                height: 300,
+                width: size.width * 0.554,
+                height: size.height * 0.459,
               ),
             ),
             Positioned(
-              bottom: size.height * 0.05,
+              top: size.height * 0.39,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: size.height * 0.1145,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: FractionalOffset.topCenter,
+                    end: FractionalOffset.bottomCenter,
+                    colors: [
+                      Colors.white.withOpacity(0),
+                      Colors.white.withOpacity(0.6),
+                      Colors.white.withOpacity(0.943),
+                      Colors.white
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+                right: size.width * 0.215,
+                top: size.height * 0.225,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                            color: AppColors.secondary,
+                            spreadRadius: 10,
+                            blurRadius: 0,
+                            offset: Offset(0, 0)),
+                      ]),
+                  child: Center(
+                    child: Icon(
+                      Icons.description_outlined,
+                      color: AppColors.stroke,
+                    ),
+                  ),
+                )),
+            Positioned(
+                left: size.width * 0.215,
+                top: size.height * 0.32,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                            color: AppColors.secondary,
+                            spreadRadius: 10,
+                            blurRadius: 0,
+                            offset: Offset(0, 0)),
+                      ]),
+                  child: Center(
+                    child: Icon(
+                      Icons.add_box_outlined,
+                      color: AppColors.stroke,
+                    ),
+                  ),
+                )),
+            Positioned(
+              bottom: size.height * 0.07,
               left: 0,
               right: 0,
               child: Column(
