@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,8 @@ class BarcodeScannerController {
 
   final barcodeScanner = GoogleMlKit.vision.barcodeScanner();
   CameraController? cameraController;
+
+  Timer? delay;
 
   void getAvailableCameras() async {
     try {
@@ -52,17 +56,26 @@ class BarcodeScannerController {
     }
   }
 
-  void scanWithImagePicker() async {
+  ///If a image was picked return true, else return false
+  Future<bool> scanWithImagePicker() async {
     final response = await ImagePicker().getImage(source: ImageSource.gallery);
-    final inputImage = InputImage.fromFilePath(response!.path);
-    scannerBarCode(inputImage);
+    if (response != null) {
+      final inputImage = InputImage.fromFilePath(response.path);
+      await scannerBarCode(inputImage);
+      if (status.hasBarcode == false)
+        status = BarcodeScannerStatus.error(
+            "Não foi possível localizar um código de barras na imagem");
+      return true;
+    }
+    return false;
   }
 
   void scanWithCamera() {
     status = BarcodeScannerStatus.available();
-    Future.delayed(Duration(seconds: 20)).then((value) {
+    delay = Timer(Duration(seconds: 20), () {
       if (status.hasBarcode == false)
         status = BarcodeScannerStatus.error("Timeout de leitura de boleto");
+      dispose();
     });
   }
 
@@ -110,7 +123,7 @@ class BarcodeScannerController {
   }
 
   void dispose() {
-    statusNotifier.dispose();
+    delay!.cancel();
     barcodeScanner.close();
     if (status.showCamera) {
       cameraController!.dispose();

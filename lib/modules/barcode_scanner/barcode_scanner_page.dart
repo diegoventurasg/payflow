@@ -21,15 +21,27 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     controller.getAvailableCameras();
     controller.statusNotifier.addListener(() {
       if (controller.status.hasBarcode) {
-        Navigator.pushNamed(context, "/insert_boleto",
-            arguments: controller.status.barcode);
+        openInsertBoleto();
       }
     });
     super.initState();
   }
 
+  void openInsertBoleto() async {
+    //da dispose para fechar a camera
+    //antes de abrir a tela de cadastro de boleto
+    controller.dispose();
+    final result = await Navigator.pushNamed(context, "/insert_boleto",
+        arguments: controller.status.barcode);
+    //se result for diferente de null
+    //o usuário deu back na tela insert_boleto e voltou para a tela de scanner
+    //então chama controller.getAvailableCameras() para voltar a escanear
+    if (result != null) controller.getAvailableCameras();
+  }
+
   @override
   void dispose() {
+    controller.statusNotifier.dispose();
     controller.dispose();
     super.dispose();
   }
@@ -85,10 +97,14 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
               bottomNavigationBar: SetLabelButtons(
                 primaryLabel: "Inserir código do boleto",
                 primaryOnPressed: () {
-                  Navigator.pushNamed(context, "/insert_boleto");
+                  openInsertBoleto();
                 },
                 secondaryLabel: "Adicionar da galeria",
-                secondaryOnPressed: () {},
+                secondaryOnPressed: () async {
+                  controller.dispose();
+                  final imagePicked = await controller.scanWithImagePicker();
+                  if (!imagePicked) controller.getAvailableCameras();
+                },
               ),
             ),
           ),
@@ -99,14 +115,15 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                   return BottomSheetWidget(
                     title: "Não foi possível identificar um código de barras.",
                     subtitle:
-                        "Tente escanear novamente ou digite o código do seu bsoleto.",
+                        "Tente escanear novamente ou digite o código do seu boleto.",
                     primaryLabel: "Escanear novamente",
                     primaryOnPressed: () {
-                      controller.scanWithCamera();
+                      //controller.scanWithCamera();
+                      controller.getAvailableCameras();
                     },
                     secondaryLabel: "Digitar o código",
                     secondaryOnPressed: () {
-                      Navigator.pushReplacementNamed(context, "/insert_boleto");
+                      openInsertBoleto();
                     },
                   );
                 } else {
