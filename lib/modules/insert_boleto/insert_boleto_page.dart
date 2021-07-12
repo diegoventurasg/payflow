@@ -37,7 +37,7 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context, true);
+        Navigator.popUntil(context, ModalRoute.withName("/home"));
         return false;
       },
       child: Scaffold(

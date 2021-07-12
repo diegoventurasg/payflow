@@ -29,12 +29,8 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
 
   void openInsertBoleto() async {
     controller.cancel();
-    final result = await Navigator.pushNamed(context, "/insert_boleto",
+    Navigator.pushNamed(context, "/insert_boleto",
         arguments: controller.status.barcode);
-    //se result for diferente de null
-    //o usuário deu back na tela insert_boleto e voltou para a tela de scanner
-    //então chama controller.getAvailableCameras() para voltar a escanear
-    if (result != null) controller.getAvailableCameras();
   }
 
   @override
