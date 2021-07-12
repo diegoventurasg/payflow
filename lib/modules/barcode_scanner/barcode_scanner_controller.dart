@@ -38,7 +38,6 @@ class BarcodeScannerController {
   Future<void> scannerBarCode(InputImage inputImage) async {
     try {
       final barcodes = await barcodeScanner.processImage(inputImage);
-      print("TOTALB: " + barcodes.length.toString());
 
       var barcode;
       for (Barcode item in barcodes) {
@@ -125,17 +124,13 @@ class BarcodeScannerController {
   void cancel() {
     delay!.cancel();
     barcodeScanner.close();
-    if (status.showCamera) {
-      cameraController!.dispose();
-    }
+    cameraController!.dispose();
   }
 
   void dispose() {
     delay!.cancel();
     statusNotifier.dispose();
     barcodeScanner.close();
-    if (status.showCamera) {
-      cameraController!.dispose();
-    }
+    cameraController!.dispose();
   }
 }
